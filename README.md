@@ -1,7 +1,7 @@
 # Creativity Game Engine
 
 ![Engine Window](https://github.com/seanny/CreativityEngine/blob/master/screenshots/app_window.png)
-![Verbose Terminal Output](https://github.com/seanny/CreativityEngine/blob/master/screenshots/app_window.png)
+![Verbose Terminal Output](https://github.com/seanny/CreativityEngine/blob/master/screenshots/app_terminal.png)
 
 Creativity Engine is a Game Engine being developed from scratch using C++ and SDL2. The Goals are to create a game engine with 3D functionality, an editor, and mayble some actual games.
 
