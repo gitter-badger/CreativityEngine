@@ -17,7 +17,7 @@ int MAIN_PRINT(string mText)
         cout << mText << endl;
 
         ofstream engineLog;
-        engineLog.open ("engine.log");
+        engineLog.open ("engine.log", ios::app);
         engineLog << mText << endl;
         engineLog.close();
     }
@@ -26,10 +26,10 @@ int MAIN_PRINT(string mText)
 
 int ERROR_PRINT(const string mText)
 {
-    cout << mText << endl;
+    cerr << mText << endl;
 
     ofstream engineLog;
-    engineLog.open ("error.log");
+    engineLog.open ("error.log", ios::app);
     engineLog << mText << endl;
     engineLog.close();
     return 0;

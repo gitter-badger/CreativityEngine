@@ -8,18 +8,16 @@
 #include <cstdio>
 #include <algorithm>
 #include <exception>
+#include <signal.h>
 
 // 3rd Party Headers
 #include <SDL2/SDL.h>
 
 // Project Headers
 #include "main.h"
+#include "engine.h"
 #include "logging.h"
 #include "global.h"
-
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-bool gVerbose = false;
 
 using namespace std;
 
@@ -40,14 +38,32 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option)
     return std::find(begin, end, option) != end;
 }
 
+
+
 int main(int argc, char**argv)
 {
     try
     {
-        if(cmdOptionExists(argv, argv+argc, "-h") || cmdOptionExists(argv, argv+argc, "--help")) // Enable Verbose mode for Logging
+        if(cmdOptionExists(argv, argv+argc, "--fake-crash")) // Fake a crash to test its error handling
+        {
+            ERROR_PRINT("Faking a crash");
+            raise(SIGABRT);
+            return -1;
+        }
+
+        if(cmdOptionExists(argv, argv+argc, "-h") || cmdOptionExists(argv, argv+argc, "--help")) // Show available command line arguments
         {
             cout << "Syntax: " << argv[0] << " [Option]" << endl;
-            cout << "Verbose Output: -v --verbose" << endl;
+            cout << "   -h --help      Shows this help menu" << endl;
+            cout << "   -v --verbose   Verbose mode" << endl;
+            cout << "   -a --about     Engine Version" << endl;
+            cout << "   -w --windowed  Windowed Mode" << endl;
+            return 0;
+        }
+
+        if(cmdOptionExists(argv, argv+argc, "-a") || cmdOptionExists(argv, argv+argc, "--about")) // Show engine info, similar to uname
+        {
+            cout << ""ENGINE_NAME" Version "ENGINE_MAJOR"."ENGINE_MINOR"."ENGINE_BUILD": "__DATE__" "__TIME__"." << endl;
             return 0;
         }
 
@@ -56,68 +72,33 @@ int main(int argc, char**argv)
             gVerbose = true;
         }
 
-        MAIN_PRINT(""ENGINE_NAME" (C) "ENGINE_YEARS" "ENGINE_DEVELOPER". All Rights Reserved. Hello World!");
-        SDL_Window* window = NULL;
+        if(cmdOptionExists(argv, argv+argc, "-w") || cmdOptionExists(argv, argv+argc, "--windowed")) // Enable Verbose mode for Logging
+        {
+            gWindowed = true;
+        }
         
-        //The surface contained by the window
-        SDL_Surface* screenSurface = NULL;
 
-        //Initialize SDL
-        if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-        {
-            string errorString = "[Engine @ main.cpp] SDL could not initialize! SDL_Error: ";
-            errorString += SDL_GetError();
-            ERROR_PRINT(errorString);
-        }
-        else
-        {
-            MAIN_PRINT("[Engine] Create Window");
-            //Create window
-            window = SDL_CreateWindow( "Creativity Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
-            if( window == NULL )
-            {
-                string errorString = "[Engine @ main.cpp] Window could not be created! SDL_Error: ";
-                errorString += SDL_GetError();
-                ERROR_PRINT(errorString);
-            }
-            else
-            {
-                MAIN_PRINT("[Engine] Get window surface");
-                //Get window surface
-                screenSurface = SDL_GetWindowSurface( window );
+        MAIN_PRINT(""ENGINE_NAME" (C) "ENGINE_YEARS" "ENGINE_DEVELOPER". All Rights Reserved. Hello World!");
 
-                MAIN_PRINT("[Engine] Fill the surface white");
-                //Fill the surface white
-                SDL_FillRect( screenSurface, NULL, SDL_MapRGB( screenSurface->format, 0xFF, 0xFF, 0xFF ) );
-                
-                MAIN_PRINT("[Engine] Update the surface");
-                //Update the surface
-                SDL_UpdateWindowSurface( window );
+        Engine engine;
 
-                SDL_Event event;
-                bool gameRunning = true;
-                while (gameRunning)
-                {
-                    if (SDL_PollEvent(&event))
-                    {
-                        if (event.type == SDL_QUIT)
-                        {
-                            MAIN_PRINT("[Engine] Preparing to kill the game engine process");
-                            gameRunning = false;
-                        }
-                    }
-                }
+        engine.Start();
 
-            }
-
-            MAIN_PRINT("[Engine] Exiting gracefully via SDL_Quit()! Goodbye World!");
-            SDL_Quit();
-        }
+#ifdef _WIN32
+		// Windows specific code
+#elseif __APPLE__
+        // macOS specific code
+#else
+		// Linux specific code
+#endif
+        
+        
     }
     catch (...)
-	{
-		ERROR_PRINT("Exception caught, killing engine!");
-		return -1;
-	}
+    {
+        ERROR_PRINT("[Main @ main.cpp] Unknown Exception caught, killing engine!");
+        raise(SIGABRT);
+        return -1;
+    }
     return 0;
 }
