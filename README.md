@@ -1,4 +1,8 @@
 # Creativity Game Engine
+
+![Engine Window](https://github.com/seanny/CreativityEngine/blob/master/screenshots/app_window.png)
+![Verbose Terminal Output](https://github.com/seanny/CreativityEngine/blob/master/screenshots/app_window.png)
+
 Creativity Engine is a Game Engine being developed from scratch using C++ and SDL2. The Goals are to create a game engine with 3D functionality, an editor, and mayble some actual games.
 
 It only supports building to Desktop platforms for now via commandline (it's barebones), but maybe Android and iOS build support may be implemented.
@@ -15,6 +19,9 @@ Ensure that a build environment is installed such as Xcode, GNU Compilers or MS 
 git clone https://github.com/seanny/CreativityEngine.git
 ```
 2. Install SDL2 is not already done already.
+*Windows:* ????
+*Ubuntu Linux & Variants*: `sudo apt-get install --yes libsdl2-dev`
+*macOS:* `brew install sdl2`
 3. `cd` to the repository:
 ```
 cd CreativityEngine/

@@ -8,15 +8,19 @@
 #include <string>
 
 #include "logging.h"
+#include "global.h"
 
 int MAIN_PRINT(string mText)
 {
-    cout << mText << endl;
+    if(gVerbose == 1)
+    {
+        cout << mText << endl;
 
-    ofstream engineLog;
-    engineLog.open ("engine.log");
-    engineLog << mText << endl;
-    engineLog.close();
+        ofstream engineLog;
+        engineLog.open ("engine.log");
+        engineLog << mText << endl;
+        engineLog.close();
+    }
     return 0;
 }
 
