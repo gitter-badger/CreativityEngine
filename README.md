@@ -11,6 +11,10 @@ I would also like to implement support for Consoles as well, but that is further
 
 This repository contains the main engine source code and uses only SDL2.
 
+## Development Team
+Sean McElholm - Lead Developer
+
+
 ## Build Instructions
 Ensure that a build environment is installed such as Xcode, GNU Compilers or MS Visual Studio Compilers
 
