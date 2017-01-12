@@ -1,7 +1,9 @@
 # Creativity Game Engine
 Creativity Engine is a Game Engine being developed from scratch using C++ and SDL2. The Goals are to create a game engine with 3D functionality, an editor, and mayble some actual games.
 
-It only supports building to Desktop platforms for now, but maybe Android and iOS build support may be implemented.
+It only supports building to Desktop platforms for now via commandline (it's barebones), but maybe Android and iOS build support may be implemented.
+
+I would also like to implement support for Consoles as well, but that is further on down the line.
 
 This repository contains the main engine source code and uses only SDL2.
 
