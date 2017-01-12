@@ -15,7 +15,15 @@ Ensure that a build environment is installed such as Xcode, GNU Compilers or MS 
 git clone https://github.com/seanny/CreativityEngine.git
 ```
 2. Install SDL2 is not already done already.
-3. Compile using:
+3. `cd` to the repository:
+```
+cd CreativityEngine/
+```
+3. Create the `bin` directory:
+```
+mkdir bin
+```
+4. Compile using:
 ```
 make
 ```
