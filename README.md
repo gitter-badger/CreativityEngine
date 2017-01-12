@@ -26,7 +26,7 @@ Creativity Engine is a project that I am doing in my free time to learn C++ and 
 This project was initially started on Thursday, January 12, 2017.
 
 ## Want to contribute? 
-Fork, make and change and push it back to the main repository! :smile:
+Fork, make a change and push it back to the main repository! :smile:
 
 ## Features
 * [Features](https://github.com/seanny/CreativityEngine/blob/master/FEATURES.md)
