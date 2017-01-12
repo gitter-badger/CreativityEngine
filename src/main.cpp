@@ -16,7 +16,7 @@ using namespace std;
 
 int main(int argc, char**argv)
 {
-    MAIN_PRINT("Creativity Engine (C) 2017 Sean McElholm. All Rights Reserved.");
+    ERROR_PRINT("Creativity Engine (C) 2017 Sean McElholm. All Rights Reserved.");
     SDL_Window* window = NULL;
     
     //The surface contained by the window
@@ -25,7 +25,9 @@ int main(int argc, char**argv)
     //Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
-        printf( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
+        string errorString = "SDL could not initialize! SDL_Error: ";
+        errorString += SDL_GetError();
+        ERROR_PRINT(errorString);
     }
     else
     {
@@ -33,7 +35,9 @@ int main(int argc, char**argv)
         window = SDL_CreateWindow( "Creativity Engine", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
         if( window == NULL )
         {
-            printf( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
+            string errorString = "Window could not be created! SDL_Error: ";
+            errorString += SDL_GetError();
+            ERROR_PRINT(errorString);
         }
         else
         {

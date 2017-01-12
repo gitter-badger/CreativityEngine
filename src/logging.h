@@ -9,5 +9,6 @@
 using namespace std;
 
 int MAIN_PRINT(std::string mText);
+int ERROR_PRINT(std::string mText);
 
 #endif
