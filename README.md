@@ -11,10 +11,14 @@ This repository contains the main engine source code and uses only SDL2.
 Ensure that a build environment is installed such as Xcode, GNU Compilers or MS Visual Studio Compilers
 
 1. Clone repository:
-    git clone https://github.com/seanny/CreativityEngine.git
+```
+git clone https://github.com/seanny/CreativityEngine.git
+```
 2. Install SDL2 is not already done already.
 3. Compile using:
-    make
+```
+make
+```
 
 ## History
 Creativity Engine is a project that I am doing in my free time to learn C++ and add something to my CV.
