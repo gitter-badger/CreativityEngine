@@ -19,13 +19,12 @@ addons:
     packages:
     - libsdl2-dev
     - freeglut3-dev 
+    - gcc-5
 
 before_script:
   - mkdir -p bin
 
 before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install g++-5 ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2 ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -O -L https://www.libsdl.org/release/SDL2-2.0.5.dmg; hdiutil attach SDL2-2.0.5.dmg; sudo cp -a /Volumes/SDL2/SDL2.framework /Library/Frameworks/; fi
