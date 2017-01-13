@@ -58,16 +58,14 @@ int Engine::Start()
     try
     {
         //Initialize SDL
-        if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
+        if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
         {
-            string errorString = "[Engine] SDL could not initialize! SDL_Error: ";
-            errorString += SDL_GetError();
-            ERROR_PRINT(errorString);
+            ERROR_PRINT("[Engine] SDL could not initialize! SDL_Error: %s", SDL_GetError());
             return -1;
         }
         else
         {
-            MAIN_PRINT("[Engine] Set GL Attributes");
+            ERROR_PRINT("[Engine] Set GL Attributes");
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
@@ -88,7 +86,7 @@ int Engine::Start()
                 SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "Window could not be created!\nSee error.log for more info!", NULL);
                 string errorString = "[Engine @ engine.cpp] Window could not be created! SDL_Error: ";
                 errorString += SDL_GetError();
-                ERROR_PRINT(errorString);
+                ERROR_PRINT("[Engine @ engine.cpp] Window could not be created!");
             }
             else
             {
@@ -100,7 +98,7 @@ int Engine::Start()
                     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "OpenGL context could not be created!\nSee error.log for more info!", window);
                     string errorString = "[Engine] OpenGL context could not be created! SDL Error: ";
                     errorString += SDL_GetError();
-                    ERROR_PRINT(errorString);
+                    ERROR_PRINT("[Engine @ engine.cpp] OpenGL context could not be created!");
                     return -1;
                 }
 
@@ -117,9 +115,9 @@ int Engine::Start()
                 if( error != GL_NO_ERROR )
                 {
                     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "Error initializing OpenGL!\nSee error.log for more info!", window);
-                    string errorString = "[Engine] Error initializing OpenGL: ";
-                    errorString += error;
-                    ERROR_PRINT(errorString);
+                    /*string errorString = "[Engine] Error initializing OpenGL: ";
+                    errorString += error;*/
+                    ERROR_PRINT("[Engine] Error initializing OpenGL: %d", error);
                     return -1;
                 }
 
@@ -134,7 +132,7 @@ int Engine::Start()
                     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "Error initializing OpenGL!\nSee error.log for more info!", window);
                     string errorString = "[Engine] Error initializing OpenGL: ";
                     errorString += error;
-                    ERROR_PRINT(errorString);
+                    ERROR_PRINT("[Engine] Error initializing OpenGL: %d", error);
                     return -1;
                 }
                 // Initialize GLEW

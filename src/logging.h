@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int MAIN_PRINT(std::string mText);
-int ERROR_PRINT(std::string mText);
+int MAIN_PRINT(const char* mText, ...));
+int ERROR_PRINT(const char* mText, ...);
 
 #endif

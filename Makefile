@@ -21,7 +21,6 @@ OBJ_NAME = bin/creativity
 
 #This is the target that compiles our executable
 all : $(OBJS)
-	mkdir bin/
 	$(CC) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
 
 clean:

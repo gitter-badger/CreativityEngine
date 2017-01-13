@@ -1,12 +1,13 @@
 os:
  - linux
  - osx
+osx_image: xcode8.2
 language: cpp
-compiler:
-  - g++
 branches:
   only:
   - master
-before_install:
-- if [ $TRAVIS_OS_NAME == linux ]; then ./scripts/dependencies.sh; fi
-- if [ $TRAVIS_OS_NAME == osx ]; then brew update && brew install llvm38 && brew install openssl && brew link --force --overwrite llvm38; fi
+
+before_script: chmod +x configure.sh && ./configure.sh
+ 
+script:
+  - make all

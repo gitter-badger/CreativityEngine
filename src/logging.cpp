@@ -16,7 +16,7 @@
     SDL_Log(fmt);
 }*/
 
-int MAIN_PRINT(string mText)
+int MAIN_PRINT(const char* mText, ...))
 {
     if(gVerbose == 1) // Only print text to console when verbose mode is enabled.
     {
@@ -30,7 +30,7 @@ int MAIN_PRINT(string mText)
     return 0;
 }
 
-int ERROR_PRINT(const string mText)
+int ERROR_PRINT(const char* mText, ...)
 {
     cerr << mText << endl;
 
