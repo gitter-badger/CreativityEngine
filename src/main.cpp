@@ -44,12 +44,14 @@ int main(int argc, char**argv)
 {
     try
     {
+        #if DEBUG
         if(cmdOptionExists(argv, argv+argc, "--fake-crash")) // Fake a crash to test its error handling
         {
             ERROR_PRINT("Faking a crash");
             raise(SIGABRT);
             return -1;
         }
+        #endif
 
         if(cmdOptionExists(argv, argv+argc, "-h") || cmdOptionExists(argv, argv+argc, "--help")) // Show available command line arguments
         {
@@ -84,13 +86,7 @@ int main(int argc, char**argv)
 
         engine.Start();
 
-#ifdef _WIN32
-		// Windows specific code
-#elseif __APPLE__
-        // macOS specific code
-#else
-		// Linux specific code
-#endif
+
         
         
     }
