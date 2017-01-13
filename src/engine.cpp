@@ -31,6 +31,7 @@ const int SCREEN_HEIGHT = 480;
 
 bool gVerbose = false;
 bool gWindowed = false;
+bool gBorderless = false;
 
 //Keep track of the current frame
 int frame = 0;
@@ -39,8 +40,6 @@ int frame = 0;
 bool cap = true;
 
 using namespace std;
-
-bool borderlessWindowed = false;
 
 void Engine::onRender()
 {
@@ -73,7 +72,6 @@ int Engine::Start()
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
             MAIN_PRINT("[Engine] Create Window");
-            //Create window
             SDL_Rect rect;
             if (SDL_GetDisplayBounds(0, &rect) != 0) 
             {
@@ -84,21 +82,22 @@ int Engine::Start()
             {
                 Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, rect.w, rect.h, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL );
             }
-
-            
+        
             if( Engine::window == NULL )
             {
+                SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "Window could not be created!\nSee error.log for more info!", NULL);
                 string errorString = "[Engine @ engine.cpp] Window could not be created! SDL_Error: ";
                 errorString += SDL_GetError();
                 ERROR_PRINT(errorString);
             }
             else
             {
-
+                
                 //Create context
                 gContext = SDL_GL_CreateContext( window );
                 if( gContext == NULL )
                 {
+                    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "OpenGL context could not be created!\nSee error.log for more info!", window);
                     string errorString = "[Engine] OpenGL context could not be created! SDL Error: ";
                     errorString += SDL_GetError();
                     ERROR_PRINT(errorString);
@@ -117,6 +116,7 @@ int Engine::Start()
                 error = glGetError();
                 if( error != GL_NO_ERROR )
                 {
+                    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "Error initializing OpenGL!\nSee error.log for more info!", window);
                     string errorString = "[Engine] Error initializing OpenGL: ";
                     errorString += error;
                     ERROR_PRINT(errorString);
@@ -131,6 +131,7 @@ int Engine::Start()
                 error = glGetError();
                 if( error != GL_NO_ERROR )
                 {
+                    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "Error initializing OpenGL!\nSee error.log for more info!", window);
                     string errorString = "[Engine] Error initializing OpenGL: ";
                     errorString += error;
                     ERROR_PRINT(errorString);
@@ -144,15 +145,21 @@ int Engine::Start()
 
                 if(gWindowed == false)
                 {
-                    if(borderlessWindowed == true)
+                    if(gBorderless == true)
                     {
+                        MAIN_PRINT("[Engine] Borderless Window");
                         SDL_SetWindowFullscreen(window,SDL_WINDOW_FULLSCREEN_DESKTOP);
                     }
                     else
                     {
-                        
+                        MAIN_PRINT("[Engine] Exclusive Window");
                         SDL_SetWindowFullscreen(window,SDL_WINDOW_FULLSCREEN);
                     }
+                }
+                else
+                {
+                    MAIN_PRINT("[Engine] Maximise Window");
+                    SDL_MaximizeWindow(window);
                 }
                 //renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_PRESENTVSYNC);
 
@@ -194,6 +201,7 @@ int Engine::Start()
     }
     catch (...)
     {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Window Error", "Unknown Exception caught!", NULL);
         ERROR_PRINT("[Engine @ main.cpp] Unknown Exception caught, killing engine!");
         raise(SIGABRT);
         return -1;

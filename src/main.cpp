@@ -38,7 +38,10 @@ bool cmdOptionExists(char** begin, char** end, const std::string& option)
     return std::find(begin, end, option) != end;
 }
 
+void projectMaintainers()
+{
 
+}
 
 int main(int argc, char**argv)
 {
@@ -56,31 +59,55 @@ int main(int argc, char**argv)
         if(cmdOptionExists(argv, argv+argc, "-h") || cmdOptionExists(argv, argv+argc, "--help")) // Show available command line arguments
         {
             cout << "Syntax: " << argv[0] << " [Option]" << endl;
-            cout << "   -h --help      Shows this help menu" << endl;
-            cout << "   -v --verbose   Verbose mode" << endl;
-            cout << "   -a --about     Engine Version" << endl;
-            cout << "   -w --windowed  Windowed Mode" << endl;
+            cout << "Allowed Options:" << endl;
+            cout << "  -h --help                    Shows this help menu" << endl;
+            cout << "  -v --verbose                 Shows more console output, for the nerdy or developer" << endl;
+            cout << "  -a --about                   Show the engine version and build date/time" << endl;
+            cout << "  -w --windowed                Force Windowed mode" << endl;
+            cout << "  -b --borderless              Force borderless fullscreen mode" << endl;
+            cout << "  -c --credits                 See who maintains this project and any 3rd party libraries used" << endl;
             return 0;
         }
 
-        if(cmdOptionExists(argv, argv+argc, "-a") || cmdOptionExists(argv, argv+argc, "--about")) // Show engine info, similar to uname
+        if(cmdOptionExists(argv, argv+argc, "-a") || cmdOptionExists(argv, argv+argc, "--about")) // Show engine info, similar to Unix `uname -a` command.
         {
-            cout << ""ENGINE_NAME" Version "ENGINE_MAJOR"."ENGINE_MINOR"."ENGINE_BUILD": "__DATE__" "__TIME__"." << endl;
+            cout << "" ENGINE_NAME " Version " ENGINE_MAJOR "." ENGINE_MINOR "." ENGINE_BUILD ": " __DATE__ " " __TIME__ "." << endl;
             return 0;
         }
 
-        if(cmdOptionExists(argv, argv+argc, "-v") || cmdOptionExists(argv, argv+argc, "--verbose")) // Enable Verbose mode for Logging
+        if(cmdOptionExists(argv, argv+argc, "-c") || cmdOptionExists(argv, argv+argc, "--credits")) // Show credits
+        {
+            cout << "Programmers" << endl;
+            cout << "Sean McElholm - Project Lead" << endl;
+
+            cout << endl << "Manual" << endl;
+            cout << "(empty)" << endl;
+
+            cout << endl << "Packages" << endl;
+            cout << "(empty)" << endl;
+
+            cout << endl << "PR and Translations" << endl;
+            cout << "(empty)" << endl;
+            return 0;
+        }
+
+        if(cmdOptionExists(argv, argv+argc, "-v") || cmdOptionExists(argv, argv+argc, "--verbose")) // Verbose mode
         {
             gVerbose = true;
         }
 
-        if(cmdOptionExists(argv, argv+argc, "-w") || cmdOptionExists(argv, argv+argc, "--windowed")) // Enable Verbose mode for Logging
+        if(cmdOptionExists(argv, argv+argc, "-w") || cmdOptionExists(argv, argv+argc, "--windowed")) // Windowed Mode
         {
             gWindowed = true;
         }
+
+        if(cmdOptionExists(argv, argv+argc, "-b") || cmdOptionExists(argv, argv+argc, "--borderless")) // Borderless Windowed Mode
+        {
+            gBorderless = true;
+        }
         
 
-        MAIN_PRINT(""ENGINE_NAME" (C) "ENGINE_YEARS" "ENGINE_DEVELOPER". All Rights Reserved. Hello World!");
+        MAIN_PRINT("" ENGINE_NAME " (C) " ENGINE_YEARS " " ENGINE_DEVELOPER ". All Rights Reserved. Hello World!");
 
         Engine engine;
 

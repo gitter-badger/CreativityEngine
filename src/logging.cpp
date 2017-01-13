@@ -10,9 +10,15 @@
 #include "logging.h"
 #include "global.h"
 
+/*int test(const char* fmt,
+             ...)
+{
+    SDL_Log(fmt);
+}*/
+
 int MAIN_PRINT(string mText)
 {
-    if(gVerbose == 1)
+    if(gVerbose == 1) // Only print text to console when verbose mode is enabled.
     {
         cout << mText << endl;
 

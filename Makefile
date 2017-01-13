@@ -6,7 +6,7 @@ CC = c++
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
-COMPILER_FLAGS = -Wall -O3
+COMPILER_FLAGS = -W -O3 -std=c++14
 
 #LINKER_FLAGS specifies the libraries we're linking against
 UNAME := $(shell uname)

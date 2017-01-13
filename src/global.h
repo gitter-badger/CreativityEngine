@@ -3,6 +3,7 @@
 
 extern bool gVerbose;
 extern bool gWindowed;
+extern bool gBorderless;
 
 #define ENGINE_NAME "Creativity Engine"
 #define ENGINE_DEVELOPER "Creativity Engine Team"
