@@ -1,11 +1,12 @@
 platform='unknown'
 unamestr=`uname`
 if [[ "$unamestr" == 'Linux' ]]; then
+    export DEBIAN_FRONTEND=noninteractive
     sudo apt-get update
-    sudo apt-get upgrade
-    sudo apt-get install --yes build-essential
-    sudo apt-get install --yes freeglut3-dev 
-    sudo apt-get install --yes libsdl2-dev
+    sudo apt-get -q -y upgrade
+    sudo apt-get -q -y install build-essential
+    sudo apt-get -q -y install freeglut3-dev 
+    sudo apt-get -q -y install libsdl2-dev
 elif [[ "$unamestr" == 'Darwin' ]]; then
     brew update
     brew install sdl2
