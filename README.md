@@ -11,8 +11,10 @@ I would also like to implement support for Consoles as well, but that is further
 
 This repository contains the main engine source code and uses only SDL2.
 
+It currently works with MacOS, but it is written in pure C++ and SDL2, so it should in theory work on Linux and Windows as well.
+
 ## Development Team
-Sean McElholm - Lead Developer
+Sean McElholm - Project Lead
 
 
 ## Build Instructions
@@ -20,7 +22,7 @@ Ensure that a build environment is installed such as Xcode, GNU Compilers or MS 
 
 1. Clone repository:
 ```
-git clone https://github.com/seanny/CreativityEngine.git
+git clone https://github.com/CreativityEngineTeam/CreativityEngine.git
 ```
 2. Install SDL2 is not already done already.
 *Windows:* ????

@@ -6,7 +6,18 @@
 #include <signal.h>
 
 // 3rd Party Headers
+#ifdef __APPLE__
+    #include <OpenGL/gl.h>
+    #include <OpenGL/glu.h>
+    #include <GLUT/glut.h>
+#else
+    #include <GL/gl.h>
+    #include <GL/glu.h>
+    #include <GL/glut.h>
+#endif
+
 #include <SDL2/SDL.h>
+
 
 // Project Headers
 #include "main.h"
@@ -57,18 +68,21 @@ int Engine::Start()
         }
         else
         {
-            MAIN_PRINT("[Engine] Create Window");
+            MAIN_PRINT("[Engine] Set GL Attributes");
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+            SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
+            MAIN_PRINT("[Engine] Create Window");
             //Create window
             SDL_Rect rect;
             if (SDL_GetDisplayBounds(0, &rect) != 0) 
             {
                 SDL_Log("SDL_GetDisplayBounds failed: %s", SDL_GetError());
-                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE );
+                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
             }
             else
             {
-                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, rect.w, rect.h, SDL_WINDOW_SHOWN );
+                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, rect.w, rect.h, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL );
             }
 
             
@@ -80,6 +94,53 @@ int Engine::Start()
             }
             else
             {
+
+                //Create context
+                gContext = SDL_GL_CreateContext( window );
+                if( gContext == NULL )
+                {
+                    string errorString = "[Engine] OpenGL context could not be created! SDL Error: ";
+                    errorString += SDL_GetError();
+                    ERROR_PRINT(errorString);
+                    return -1;
+                }
+
+
+                //Intialize OpenGL
+                GLenum error = GL_NO_ERROR;
+
+                //Initialize Projection Matrix
+                glMatrixMode( GL_PROJECTION );
+                glLoadIdentity();
+
+                //Check for error
+                error = glGetError();
+                if( error != GL_NO_ERROR )
+                {
+                    string errorString = "[Engine] Error initializing OpenGL: ";
+                    errorString += error;
+                    ERROR_PRINT(errorString);
+                    return -1;
+                }
+
+                //Initialize Modelview Matrix
+                glMatrixMode( GL_MODELVIEW );
+                glLoadIdentity();
+
+                //Check for error
+                error = glGetError();
+                if( error != GL_NO_ERROR )
+                {
+                    string errorString = "[Engine] Error initializing OpenGL: ";
+                    errorString += error;
+                    ERROR_PRINT(errorString);
+                    return -1;
+                }
+                // Initialize GLEW
+                /*if (glewInit() != GLEW_OK) {
+                    fprintf(stderr, "Failed to initialize GLEW\n");
+                    return;
+                }*/
 
                 if(gWindowed == false)
                 {

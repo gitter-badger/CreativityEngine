@@ -9,8 +9,13 @@ CC = c++
 COMPILER_FLAGS = -Wall -O3
 
 #LINKER_FLAGS specifies the libraries we're linking against
-LINKER_FLAGS = -lSDL2
+UNAME := $(shell uname)
 
+ifeq ($(UNAME),Darwin) # Running on macOS
+LINKER_FLAGS = -I./external/glm -lSDL2 -framework GLUT -framework OpenGL -framework Cocoa 
+else # Running on Windows or Linux (NOT TESTED)
+LINKER_FLAGS = -I./external/glm -lSDL2 -lGL -lGLU -lm -lglut 
+endif
 #OBJ_NAME specifies the name of our exectuable
 OBJ_NAME = bin/creativity
 
