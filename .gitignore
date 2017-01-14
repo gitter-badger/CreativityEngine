@@ -36,4 +36,6 @@ bin/
 *.exe
 *.out
 *.app
-creativity # Makefile build
+
+# Vagrant
+.vagrant
