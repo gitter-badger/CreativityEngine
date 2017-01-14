@@ -2,14 +2,19 @@
 OBJS = src/*.cpp
 
 #CC specifies which compiler we're using
+UNAME := $(shell uname)
+
+ifeq ($(UNAME),Darwin)
 CC = g++
+else
+CC = g++-5
+endif
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
 COMPILER_FLAGS = -W -O3 -std=c++14
 
 #LINKER_FLAGS specifies the libraries we're linking against
-UNAME := $(shell uname)
 
 ifeq ($(UNAME),Darwin) # Running on macOS
 LINKER_FLAGS = -I./external/glm -lSDL2 -framework GLUT -framework OpenGL -framework Cocoa 
