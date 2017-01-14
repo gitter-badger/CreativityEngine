@@ -3,9 +3,7 @@
  * Copyright (C) 2017 Sean McElholm. All Rights Reserved.
  */
 #include <iostream>
-#include <cstdio>
 #include <fstream>
-#include <string>
 
 #include <SDL2/SDL.h>
 
@@ -35,7 +33,7 @@ int MAIN_PRINT(const char* mText, ...)
 int SYS_FATAL_PRINT(char* file, int line, const char* mText, ...)
 {
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", mText, NULL);
-    cerr << mText << endl;
+    cerr << "[FATAL ERROR] " << mText << endl;
     cerr << "Error caught at '" << file << "' at line " << line << endl;
 
     ofstream engineLog;

@@ -1,29 +1,11 @@
 // Standard Headers
-#include <iostream>
-#include <cstdio>
-#include <algorithm>
-#include <exception>
-#include <signal.h>
-
-// 3rd Party Headers
-#ifdef __APPLE__
-    #include <OpenGL/gl.h>
-    #include <OpenGL/glu.h>
-    #include <GLUT/glut.h>
-#else
-    #include <GL/gl.h>
-    #include <GL/glu.h>
-    #include <GL/glut.h>
-#endif
-
-#include <SDL2/SDL.h>
-
-
 // Project Headers
 #include "main.h"
 #include "engine.h"
 #include "logging.h"
 #include "global.h"
+#include "scene.h"
+#include "files.h"
 
 
 const int SCREEN_WIDTH = 640;
@@ -32,6 +14,11 @@ const int SCREEN_HEIGHT = 480;
 bool gVerbose = false;
 bool gWindowed = false;
 bool gBorderless = false;
+bool gGameRunning = true;
+
+int gWindowWidth;
+int gWindowHeight;
+
 
 //Keep track of the current frame
 int frame = 0;
@@ -78,20 +65,37 @@ int Engine::Start()
         }
         else
         {
+            Files files;
+            files.initializeEnginePrefs();
+            if(files.isWritingEnabled() == true)
+            {
+                MAIN_PRINT("[Engine] Writing enabled");    
+            }
+            else
+            {
+                FATAL_PRINT("Writing disabled, engine may function incorrectly at places.");    
+            }
+
+            MAIN_PRINT(files.getEnginePreferences());
+
             MAIN_PRINT("[Engine] Set GL Attributes");
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
 
             MAIN_PRINT("[Engine] Create Window");
             SDL_Rect rect;
+
             if (SDL_GetDisplayBounds(0, &rect) != 0) 
             {
                 SDL_Log("SDL_GetDisplayBounds failed: %s", SDL_GetError());
-                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
+                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
             }
             else
             {
-                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, rect.w, rect.h, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL );
+                gWindowWidth = rect.w;
+                gWindowHeight = rect.h;
+                printf("[Engine] WindowSize %i x %i\n", gWindowWidth, gWindowHeight);
+                Engine::window = SDL_CreateWindow( ENGINE_NAME, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gWindowWidth, gWindowHeight, SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE );
             }
         
             if( Engine::window == NULL )
@@ -135,6 +139,9 @@ int Engine::Start()
                 //Initialize clear color
                 glClearColor( 0.f, 0.f, 0.f, 1.f );
 
+                glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+                glEnable( GL_BLEND );
+
                 //Check for error
                 error = glGetError();
                 if( error != GL_NO_ERROR )
@@ -171,20 +178,24 @@ int Engine::Start()
                 MAIN_PRINT("[Engine] First onRender");
                 Engine::onRender();
 
+                Scene scene;
+
                 SDL_Event event;
-                bool gameRunning = true;
-                while (gameRunning)
+                while (gGameRunning)
                 {
                     const Uint8 *state = SDL_GetKeyboardState(NULL);
                     Engine::onRender();
+                    #if DEBUG
+                    printf("Mouse = %i x %i\n", scene.getMouseX(), scene.getMouseY());
+                    #endif
                     if (SDL_PollEvent(&event))
                     {
                         switch(event.type)
                         {
                             case SDL_QUIT:
                             {
-                                MAIN_PRINT("[Engine] Preparing to kill the game engine process");
-                                gameRunning = false;
+                                MAIN_PRINT("[Engine] Preparing to kill the game engine via SDL_QUIT");
+                                gGameRunning = false;
                             }
                             case SDL_KEYDOWN:
                             {

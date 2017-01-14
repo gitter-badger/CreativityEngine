@@ -3,11 +3,11 @@
  * Copyright (C) 2017 Sean McElholm. All Rights Reserved.
  */
 
-#ifndef ENGINE_H
-#define ENGINE_H
+#ifndef SCENE_H
+#define SCENE_H
 
 #include <iostream>
-#include <signal.h>
+#include <vector>
 
 // 3rd Party Headers
 #ifdef __APPLE__
@@ -30,24 +30,15 @@
 
 using namespace std;
 
-class Engine {
+class Scene {
 public:
 
-    // onRender
-    void onRender();
-    int Start();
-
-    // GL Context
-    SDL_GLContext gContext;
-
-    // Main Window
-    SDL_Window* window = NULL;
-
-    // The surface contained by the window
-    SDL_Surface* screenSurface = NULL;
-
-    // Surface Renderer
-    SDL_Renderer* renderer = nullptr;
+    Scene();
+    virtual ~Scene();
+    void onSceneUpdate();
+    void onQuitScene();
+    int getMouseX();
+    int getMouseY();
 
 };
 

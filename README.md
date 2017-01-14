@@ -1,5 +1,6 @@
 # Creativity Game Engine
 [![Build Status](https://travis-ci.org/CreativityEngineTeam/CreativityEngine.svg?branch=master)](https://travis-ci.org/CreativityEngineTeam/CreativityEngine)
+[![Build Status](https://scan.coverity.com/projects/11471/badge.svg)](https://scan.coverity.com/projects/creativityengineteam-creativityengine)
 
 Creativity Engine is a Game Engine being developed from scratch using C++ and SDL2. The Goals are to create a game engine with 3D functionality, an editor, and mayble some actual games.
 
