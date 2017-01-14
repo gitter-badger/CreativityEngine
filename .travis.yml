@@ -1,32 +1,58 @@
+# Enable C++ Support
 language: cpp
+# Enable Sudo Support
 sudo: required
 dist: trusty
 
+# Set the OS to Linux and macOS
 os:
   - linux
   - osx
 
+# Set the Compiler to GNU C++ and CLANG
 compiler:
   - g++
   - clang
 
-cache:
-  apt:  true
-  ccache: true
+matrix:
+  include:
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-4.9
+      env: COMPILER=g++-4.9
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env: COMPILER=g++-5
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.6
+          packages:
+            - clang-3.6
+      env: COMPILER=clang++-3.6
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-precise-3.7
+          packages:
+            - clang-3.7
+      env: COMPILER=clang++-3.7
 
-addons:
-  apt:
-    packages:
-    - libsdl2-dev
-    - freeglut3-dev 
-    - gcc-5
+before_script: ./configure.sh
 
-before_script:
-  - mkdir -p bin
-
-before_install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install sdl2 ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then curl -O -L https://www.libsdl.org/release/SDL2-2.0.5.dmg; hdiutil attach SDL2-2.0.5.dmg; sudo cp -a /Volumes/SDL2/SDL2.framework /Library/Frameworks/; fi
+before_install: ./scripts/before_install.${TRAVIS_OS_NAME}.sh
 
 script: make

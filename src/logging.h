@@ -8,7 +8,10 @@
 
 using namespace std;
 
-int MAIN_PRINT(const char* mText, ...));
+#define FATAL_PRINT(a, ...) SYS_FATAL_PRINT(__FILE__, __LINE__, a, #__VA_ARGS__)
+
+int MAIN_PRINT(const char* mText, ...);
+int SYS_FATAL_PRINT(char* file, int line, const char* mText, ...);
 int ERROR_PRINT(const char* mText, ...);
 
 #endif
