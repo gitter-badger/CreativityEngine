@@ -6,7 +6,6 @@ dist: trusty
 
 # Set the OS to Linux and macOS
 os:
-  - linux
   - osx
 
 # Set the Compiler to GNU C++ and CLANG
