@@ -4,14 +4,14 @@ OBJS = src/engine/*.cpp
 #CC specifies which compiler we're using
 UNAME := $(shell uname)
 
-ifeq ($(UNAME),Darwin)
-CC = g++
-else ifeq ($(UNAME),MINGW32_NT)
-CC = g++
-else ifeq ($(UNAME),MINGW64_NT)
-CC = g++
+ifeq ($(OS),Windows_NT)
+    CC = g++
 else
-CC = g++-5
+	ifeq ($(UNAME),Darwin)
+	CC = g++
+	else
+	CC = g++-5
+	endif
 endif
 
 #COMPILER_FLAGS specifies the additional compilation options we're using
