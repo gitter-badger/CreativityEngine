@@ -1,6 +1,8 @@
 #include "files.h"
 #include "global.h"
 
+using namespace std;
+
 char* preferencePath;
 bool writingEnabled = true;
 
@@ -15,7 +17,7 @@ Files::~Files()
 
 void Files::initializeEnginePrefs() 
 {
-
+    
     char* base_path = SDL_GetPrefPath(ENGINE_DEVELOPER, ENGINE_NAME);
     if (strlen(base_path) > 0) 
     {

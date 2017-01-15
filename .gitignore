@@ -1,6 +1,3 @@
-# Directories
-bin/
-
 # Prerequisites
 *.d
 
@@ -39,3 +36,10 @@ bin/
 
 # Vagrant
 .vagrant
+
+# Ignore macOS specific files
+.DS_Store
+
+# Ignore binaries
+bin/
+cov-int/
