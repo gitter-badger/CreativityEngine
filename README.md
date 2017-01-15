@@ -1,4 +1,6 @@
 # Creativity Game Engine
+
+[![Join the chat at https://gitter.im/CreativityEngine/Lobby](https://badges.gitter.im/CreativityEngine/Lobby.svg)](https://gitter.im/CreativityEngine/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/CreativityEngineTeam/CreativityEngine.svg?branch=master)](https://travis-ci.org/CreativityEngineTeam/CreativityEngine)
 [![Build Status](https://scan.coverity.com/projects/11471/badge.svg)](https://scan.coverity.com/projects/creativityengineteam-creativityengine)
 
