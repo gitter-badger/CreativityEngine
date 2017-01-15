@@ -6,6 +6,15 @@
 #ifndef LOGGING_H
 #define LOGGING_H
 
+#include <iostream>
+#include <fstream>
+
+#include <SDL2/SDL.h>
+
+#include "global.h"
+#include "files.h"
+#include "enginetime.h"
+
 using namespace std;
 
 #define FATAL_PRINT(a, ...) SYS_FATAL_PRINT(__FILE__, __LINE__, a, #__VA_ARGS__)
@@ -13,5 +22,6 @@ using namespace std;
 int MAIN_PRINT(const char* mText, ...);
 int SYS_FATAL_PRINT(char* file, int line, const char* mText, ...);
 int ERROR_PRINT(const char* mText, ...);
+
 
 #endif

@@ -7,7 +7,6 @@
 // 3rd Party
 #include <SDL2/SDL_filesystem.h>
 
-
 class Files
 {
 public:

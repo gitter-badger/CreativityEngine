@@ -22,7 +22,7 @@ COMPILER_FLAGS = -w -O3 -std=c++14
 
 ifeq ($(UNAME),Darwin) # Running on macOS
 LINKER_FLAGS = -I./include -I./external/glm -lSDL2 -framework GLUT -framework OpenGL -framework Cocoa 
-else # Running on Windows or Linux (NOT TESTED)
+else # Running on Windows or Linux (Windows not tested, linux compiles)
 LINKER_FLAGS = -I./include -I./external/glm -lSDL2 -lGL -lGLU -lm -lglut 
 endif
 #OBJ_NAME specifies the name of our exectuable
